@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 
 interface Todo {
   id: number;
@@ -74,4 +74,14 @@ export class TodosController {
 
     return this.todos.filter(todo => todo.completed === isCompleted);
   }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    const index = this.todos.findIndex(todo => todo.id === Number(id));
+    if (index >= 0) {
+      this.todos.splice(index, 1);
+    }
+    return { success: true };
+  }
+
 }
